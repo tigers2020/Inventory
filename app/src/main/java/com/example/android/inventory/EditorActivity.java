@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -44,7 +45,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             mProductChanged = true;
-            return false;
+            return true;
         }
     };
 
@@ -221,17 +222,18 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onBackPressed() {
+        Log.i(LOG_TAG, "mProductChanged: " + mProductChanged);
         if (!mProductChanged) {
             super.onBackPressed();
-            return;
+        }else {
+            DialogInterface.OnClickListener discardButton = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            };
+            showUnSavedChangesDialog(discardButton);
         }
-        DialogInterface.OnClickListener discardButton = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
-            }
-        };
-        showUnSavedChangesDialog(discardButton);
 
     }
 
