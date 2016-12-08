@@ -116,8 +116,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(intent);
             }
         });
-
-
         getLoaderManager().initLoader(LIST_LOADER, null, this);
 
 

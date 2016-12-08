@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.example.android.inventory.R;
 import com.example.android.inventory.data.InvContract.InvEntry;
 
+import java.util.Arrays;
+
 /**
  * Created by tiger on 2016-12-06.
  */
@@ -132,7 +134,6 @@ public class InvProvider extends ContentProvider {
             if (!InvEntry.isValidCategory(pCategory)) {
                 Toast.makeText(getContext(), "Invalid Category", Toast.LENGTH_SHORT).show();
                 return false;
-
             }
         }
         if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_PRICE)) {
@@ -141,9 +142,33 @@ public class InvProvider extends ContentProvider {
             if (pPrice < 0) {
                 Toast.makeText(getContext(), "Price must be positive Values", Toast.LENGTH_SHORT).show();
                 return false;
-
+            }
+            if (pPrice == 0){
+                Toast.makeText(getContext(), "You must put price for product.", Toast.LENGTH_SHORT).show();
+                return false;
             }
         }
+        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_WEIGHT)) {
+            float pWeight = contentValues.getAsFloat(InvEntry.COLUMN_INV_PRODUCT_WEIGHT);
+
+            if(pWeight < 0){
+                Toast.makeText(getContext(), "Weight must be positive Values", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if (pWeight == 0){
+                Toast.makeText(getContext(), "You must put Weight for product.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_SIZE)){
+            String zeroSize = Arrays.toString(new String[]{"0", "0", "0"});
+            String pSize = InvEntry.COLUMN_INV_PRODUCT_SIZE;
+            if (zeroSize == pSize){
+                Toast.makeText(getContext(), "you must add size for product", Toast.LENGTH_SHORT).show();
+            return false;
+            }
+        }
+
         return true;
     }
 

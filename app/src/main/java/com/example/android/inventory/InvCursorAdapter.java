@@ -28,6 +28,7 @@ public class InvCursorAdapter extends CursorAdapter {
     private Context mContext;
     private ProductHolder mHolder;
 
+
     public InvCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
         mContext = context;
@@ -56,7 +57,7 @@ public class InvCursorAdapter extends CursorAdapter {
         int pIdCI = cursor.getColumnIndex(InvEntry._ID);
         int pNameCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_NAME);
         int pCategoryCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_CATEGORY);
-        final int pQuantityCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_QUANTITY);
+        int pQuantityCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_QUANTITY);
         int pCompanyCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_COMPANY);
         int pPriceCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_PRICE);
 
@@ -65,7 +66,7 @@ public class InvCursorAdapter extends CursorAdapter {
         String pCompanyString = cursor.getString(pCompanyCI);
         int pCategoryInt = cursor.getInt(pCategoryCI);
         String pCategoryString = getCategory(pCategoryInt);
-        int pQuantityInteger = cursor.getInt(pQuantityCI);
+        final int pQuantityInteger = cursor.getInt(pQuantityCI);
         boolean pInStock;
         if (pQuantityInteger == 0) {
             pInStock = false;
@@ -90,15 +91,7 @@ public class InvCursorAdapter extends CursorAdapter {
         mHolder.productSaleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContentValues values = new ContentValues();
-                    int quantity = Integer.parseInt(mHolder.productQuantityView.getText().toString().trim());
-                quantity--;
-                values.put(InvEntry.COLUMN_INV_PRODUCT_QUANTITY, quantity);
 
-                Uri uri = ContentUris.withAppendedId(InvEntry.CONTENT_URI, pIdInt);
-                Log.i(LOG_TAG, "Uri : " + uri);
-                mContext.getContentResolver().update(uri, values, null, null);
-                mContext.getContentResolver().notifyChange(InvEntry.CONTENT_URI, null);
             }
         });
 
@@ -157,7 +150,6 @@ public class InvCursorAdapter extends CursorAdapter {
 
 
     }
-
     private class ProductHolder {
         public TextView productNameView;
         public TextView productCategoryView;
