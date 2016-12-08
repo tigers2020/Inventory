@@ -107,15 +107,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new InvCursorAdapter(this, null);
         listView.setAdapter(mAdapter);
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-//                Uri currentUri = ContentUris.withAppendedId(InvEntry.CONTENT_URI, id);
-//                intent.setData(currentUri);
-//                startActivity(intent);
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                Uri currentUri = ContentUris.withAppendedId(InvEntry.CONTENT_URI, id);
+                intent.setData(currentUri);
+                startActivity(intent);
+            }
+        });
 
 
         getLoaderManager().initLoader(LIST_LOADER, null, this);

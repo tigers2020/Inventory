@@ -1,8 +1,11 @@
 package com.example.android.inventory;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.icu.text.NumberFormat;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,8 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import static android.R.attr.content;
+import static android.R.attr.id;
 import static com.example.android.inventory.data.InvContract.InvEntry;
 
 /**
@@ -47,13 +52,15 @@ public class InvCursorAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, final Cursor cursor) {
+    public void bindView(View view, final Context context, final Cursor cursor) {
+        int pIdCI = cursor.getColumnIndex(InvEntry._ID);
         int pNameCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_NAME);
         int pCategoryCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_CATEGORY);
         final int pQuantityCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_QUANTITY);
         int pCompanyCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_COMPANY);
         int pPriceCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_PRICE);
 
+        final int pIdInt = cursor.getInt(pIdCI);
         String pNameString = cursor.getString(pNameCI);
         String pCompanyString = cursor.getString(pCompanyCI);
         int pCategoryInt = cursor.getInt(pCategoryCI);
@@ -83,11 +90,15 @@ public class InvCursorAdapter extends CursorAdapter {
         mHolder.productSaleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ContentValues values = new ContentValues();
                     int quantity = Integer.parseInt(mHolder.productQuantityView.getText().toString().trim());
                 quantity--;
+                values.put(InvEntry.COLUMN_INV_PRODUCT_QUANTITY, quantity);
 
-                mHolder.productQuantityView.setText(String.valueOf(quantity));
-
+                Uri uri = ContentUris.withAppendedId(InvEntry.CONTENT_URI, pIdInt);
+                Log.i(LOG_TAG, "Uri : " + uri);
+                mContext.getContentResolver().update(uri, values, null, null);
+                mContext.getContentResolver().notifyChange(InvEntry.CONTENT_URI, null);
             }
         });
 

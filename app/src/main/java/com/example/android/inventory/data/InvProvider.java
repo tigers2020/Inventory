@@ -111,28 +111,38 @@ public class InvProvider extends ContentProvider {
     }
 
     private boolean checkValid(ContentValues contentValues) {
-        String pName = contentValues.getAsString(InvEntry.COLUMN_INV_PRODUCT_NAME);
-        int pQuantity = contentValues.getAsInteger(InvEntry.COLUMN_INV_PRODUCT_QUANTITY);
-        int pCategory = contentValues.getAsInteger(InvEntry.COLUMN_INV_PRODUCT_CATEGORY);
-        float pPrice = contentValues.getAsFloat(InvEntry.COLUMN_INV_PRODUCT_PRICE);
 
-        if (TextUtils.isEmpty(pName)) {
-            Toast.makeText(getContext(), "Product Name must be entered", Toast.LENGTH_SHORT).show();
-            return false;
+        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_NAME)) {
+            String pName = contentValues.getAsString(InvEntry.COLUMN_INV_PRODUCT_NAME);
+            if (TextUtils.isEmpty(pName)) {
+                Toast.makeText(getContext(), "Product Name must be entered", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
-        if (pQuantity < 0) {
-            Toast.makeText(getContext(), "Quantity must be positive Values", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!InvEntry.isValidCategory(pCategory)) {
-            Toast.makeText(getContext(), "Invalid Category", Toast.LENGTH_SHORT).show();
-            return false;
 
+        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_QUANTITY)) {
+            int pQuantity = contentValues.getAsInteger(InvEntry.COLUMN_INV_PRODUCT_QUANTITY);
+            if (pQuantity < 0) {
+                Toast.makeText(getContext(), "Quantity must be positive Values", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
-        if (pPrice < 0) {
-            Toast.makeText(getContext(), "Price must be positive Values", Toast.LENGTH_SHORT).show();
-            return false;
+        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_CATEGORY)) {
+            int pCategory = contentValues.getAsInteger(InvEntry.COLUMN_INV_PRODUCT_CATEGORY);
+            if (!InvEntry.isValidCategory(pCategory)) {
+                Toast.makeText(getContext(), "Invalid Category", Toast.LENGTH_SHORT).show();
+                return false;
 
+            }
+        }
+        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_PRICE)) {
+            float pPrice = contentValues.getAsFloat(InvEntry.COLUMN_INV_PRODUCT_PRICE);
+
+            if (pPrice < 0) {
+                Toast.makeText(getContext(), "Price must be positive Values", Toast.LENGTH_SHORT).show();
+                return false;
+
+            }
         }
         return true;
     }
