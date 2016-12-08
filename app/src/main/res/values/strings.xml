@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Inventory</string>
+    <string name="cannot_query_unknown_uri">"Cannot query unknown URI: "</string>
+    <string name="no_production_found">No Production Found</string>
+    <string name="dummy_description">Plays all your music from Amazon Music, Spotify, Pandora, iHeartRadio, TuneIn, and more using just your voice\\n Fills the room with immersive, 360º omni-directional audio \\n Allows hands-free convenience with voice-control\\n  Hears you from across the room with far-field voice recognition, even while music is playing\\n Answers questions, reads audiobooks and the news, reports traffic and weather, gives info on local businesses, provides sports scores and schedules, and more using the Alexa Voice Service\\n Controls lights, switches, and thermostats with compatible WeMo, Philips Hue, Samsung SmartThings, Wink, Insteon, Nest, and ecobee smart home devices\\n Always getting smarter and adding new features, plus thousands of skills like Uber, Domino\'s, and more\\n</string>
+    <string name="product_insert_success">Product Insert Success.</string>
+    <string name="product_insert_failed">Product Insert Failed.</string>
+    <string name="product_update_success">Product Update Success.</string>
+    <string name="product_update_failed">Product update Failed.</string>
+    <string name="product_delete_success">Product Delete Success.</string>
+    <string name="product_delete_failed">Product Delete Failed.</string>
+    <string name="in_stock_date">In Stock Date</string>
+
+    <array name="product_category">
+        <item>Unknown Category</item>
+        <item>Books &amp; Audible</item>
+        <item>Movies, Music &amp; Games</item>
+        <item>Electronics &amp; Computers</item>
+        <item>Home, Garden &amp; Tools</item>
+        <item>Beauty, Health &amp; Grocery</item>
+        <item>Toys, Kids &amp; Baby</item>
+        <item>Clothing, Shoes &amp; Jewelry</item>
+        <item>Handmade</item>
+        <item>Sports &amp; Outdoors</item>
+        <item>Automotive &amp; Industrial</item>
+    </array>
+
+</resources>

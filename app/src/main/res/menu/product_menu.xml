@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_insert_dummy"
+        android:title="Insert Dummy Data"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_delete_all_data"
+        android:title="Delete All Data"
+        app:showAsAction="never"/>
+
+</menu>
