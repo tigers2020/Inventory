@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static android.R.attr.content;
 import static android.R.attr.id;
@@ -61,7 +62,6 @@ public class InvCursorAdapter extends CursorAdapter {
         int pCompanyCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_COMPANY);
         int pPriceCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_PRICE);
 
-        final int pIdInt = cursor.getInt(pIdCI);
         String pNameString = cursor.getString(pNameCI);
         String pCompanyString = cursor.getString(pCompanyCI);
         int pCategoryInt = cursor.getInt(pCategoryCI);
@@ -77,6 +77,7 @@ public class InvCursorAdapter extends CursorAdapter {
         float pPriceInt = cursor.getFloat(pPriceCI);
 
         String pPriceFormatted = priceFormat(pPriceInt);
+        final int pId = cursor.getInt(pIdCI);
 
         mHolder.productNameView.setText(pNameString);
         mHolder.productCompanyView.setText(pCompanyString);
@@ -91,6 +92,17 @@ public class InvCursorAdapter extends CursorAdapter {
         mHolder.productSaleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(mContext, pId + " Selected", Toast.LENGTH_SHORT).show();
+                int newQuantity = pQuantityInteger -1;
+                ContentValues values = new ContentValues();
+                values.put(InvEntry.COLUMN_INV_PRODUCT_QUANTITY, newQuantity);
+                Uri uri = ContentUris.withAppendedId(InvEntry.CONTENT_URI, pId);
+                int effectRow = mContext.getContentResolver().update(uri,values, null, null);
+
+                if (effectRow != 0){
+                    context.getContentResolver().notifyChange(uri, null);
+                }
+
 
             }
         });
