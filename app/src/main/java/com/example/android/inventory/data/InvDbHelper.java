@@ -24,6 +24,7 @@ public class InvDbHelper extends SQLiteOpenHelper {
                 + InvEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + InvEntry.COLUMN_INV_PRODUCT_NAME + " TEXT NOT NULL, "
                 + InvEntry.COLUMN_INV_PRODUCT_COMPANY + " TEXT, "
+                + InvEntry.COLUMN_INV_PRODUCT_COMPANY_EMAIL + " TEXT NOT NULL, "
                 + InvEntry.COLUMN_INV_PRODUCT_QUANTITY + " INTEGER NOT NULL DEFAULT 0, "
                 + InvEntry.COLUMN_INV_PRODUCT_PRICE + " REAL NOT NULL, "
                 + InvEntry.COLUMN_INV_PRODUCT_DESCRIPTION + " TEXT, "

@@ -4,6 +4,7 @@ import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.icu.text.NumberFormat;
@@ -77,8 +78,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        }
-        if (TextUtils.isEmpty(pPriceString) && pPriceString.equals("") ) {
+        }else if (TextUtils.isEmpty(pPriceString) && pPriceString.equals("") ) {
             pPriceString = "0";
             pPrice = Float.parseFloat(pPriceString);
         }else{
@@ -275,6 +275,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         mHolder.productNameView = (EditText) findViewById(R.id.edit_product_name);
         mHolder.productCompanyView = (EditText) findViewById(R.id.edit_product_company);
+        mHolder.productCompanyEmailView = (EditText) findViewById(R.id.edit_product_company_email);
         mHolder.productQuantityView = (EditText) findViewById(R.id.edit_product_quantity);
         mHolder.productPriceView = (EditText) findViewById(R.id.edit_product_price);
         mHolder.productDescriptionView = (EditText) findViewById(R.id.edit_product_description);
@@ -291,13 +292,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 @Override
                 public void onClick(View view) {
                     Date date = new Date();
-                    int pQuantity = Integer.parseInt(mHolder.productQuantityView.getText().toString().trim());
-                    String dateString = date.toString();
-                    pQuantity += 10;
-                    String pQuantityString = String.valueOf(pQuantity);
-                    mHolder.productStockDateView.setText(dateString);
-                    mHolder.productQuantityView.setText(pQuantityString);
-                    Toast.makeText(EditorActivity.this, "Order Confirmed", Toast.LENGTH_SHORT).show();
+                    mHolder.productStockDateView.setText(date.toString());
+                    String companyEmail = mHolder.productCompanyEmailView.getText().toString().trim();
+                    String productName = mHolder.productNameView.getText().toString().trim();
+                    String subject = "Request Order for " + productName;
+                    String bodytext = "Request " + productName + "\n quantity = ";
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/html");
+                    intent.putExtra(Intent.EXTRA_EMAIL, companyEmail );
+                    intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                    intent.putExtra(Intent.EXTRA_TEXT, bodytext);
+
+                    startActivity(Intent.createChooser(intent, "Send Email"));
                 }
             });
         } else {
@@ -307,17 +314,17 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         setCategorySpinner();
 
-//        //set TouchListener
-//        mHolder.productNameView.setOnTouchListener(mTouchListener);
-//        mHolder.productCategoryView.setOnTouchListener(mTouchListener);
-//        mHolder.productCompanyView.setOnTouchListener(mTouchListener);
-//        mHolder.productPriceView.setOnTouchListener(mTouchListener);
-//        mHolder.productDescriptionView.setOnTouchListener(mTouchListener);
-//        mHolder.productSizeXView.setOnTouchListener(mTouchListener);
-//        mHolder.productSizeYView.setOnTouchListener(mTouchListener);
-//        mHolder.productSizeZView.setOnTouchListener(mTouchListener);
-//        mHolder.productWeightView.setOnTouchListener(mTouchListener);
-//        mHolder.productStockDateView.setOnTouchListener(mTouchListener);
+     //   set TouchListener
+        mHolder.productNameView.setOnTouchListener(mTouchListener);
+        mHolder.productCategoryView.setOnTouchListener(mTouchListener);
+        mHolder.productCompanyView.setOnTouchListener(mTouchListener);
+        mHolder.productPriceView.setOnTouchListener(mTouchListener);
+        mHolder.productDescriptionView.setOnTouchListener(mTouchListener);
+        mHolder.productSizeXView.setOnTouchListener(mTouchListener);
+        mHolder.productSizeYView.setOnTouchListener(mTouchListener);
+        mHolder.productSizeZView.setOnTouchListener(mTouchListener);
+        mHolder.productWeightView.setOnTouchListener(mTouchListener);
+        mHolder.productStockDateView.setOnTouchListener(mTouchListener);
 
 
         if (mCurrentUri != null) {
@@ -332,6 +339,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 InvEntry.COLUMN_INV_PRODUCT_NAME,
                 InvEntry.COLUMN_INV_PRODUCT_CATEGORY,
                 InvEntry.COLUMN_INV_PRODUCT_COMPANY,
+                InvEntry.COLUMN_INV_PRODUCT_COMPANY_EMAIL,
                 InvEntry.COLUMN_INV_PRODUCT_PRICE,
                 InvEntry.COLUMN_INV_PRODUCT_DESCRIPTION,
                 InvEntry.COLUMN_INV_PRODUCT_SIZE,
@@ -346,6 +354,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         int pNameCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_NAME);
         int pCompanyCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_COMPANY);
+        int pCompanyEmailCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_COMPANY_EMAIL);
         int pCategoryCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_CATEGORY);
         int pPriceCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_PRICE);
         int pDescriptionCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_DESCRIPTION);
@@ -358,6 +367,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (cursor.moveToFirst()) {
             String pNameString = cursor.getString(pNameCI);
             String pCompanyString = cursor.getString(pCompanyCI);
+            String pCompanyEmailString = cursor.getString(pCompanyEmailCI);
             int pCategoryInt = cursor.getInt(pCategoryCI);
             float pPriceFloat = cursor.getFloat(pPriceCI);
             String pPriceString = formatPrice(pPriceFloat);
@@ -386,6 +396,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
             mHolder.productNameView.setText(pNameString);
             mHolder.productCompanyView.setText(pCompanyString);
+            mHolder.productCompanyEmailView.setText(pCompanyEmailString);
             mHolder.productCategoryView.setSelection(pCategoryInt);
             mHolder.productPriceView.setText(pPriceString);
             mHolder.productDescriptionView.setText(pDescriptionString);
@@ -415,6 +426,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         public EditText productNameView;
         public Spinner productCategoryView;
         public EditText productCompanyView;
+        public EditText productCompanyEmailView;
         public EditText productPriceView;
         public EditText productDescriptionView;
         public EditText productSizeXView;

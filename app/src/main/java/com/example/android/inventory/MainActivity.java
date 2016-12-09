@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         values.put(InvEntry.COLUMN_INV_PRODUCT_NAME, "Amazon Echo - Black");
         values.put(InvEntry.COLUMN_INV_PRODUCT_COMPANY, "Amazon");
+        values.put(InvEntry.COLUMN_INV_PRODUCT_COMPANY_EMAIL, "tigers2020@hotmail.com");
         values.put(InvEntry.COLUMN_INV_PRODUCT_QUANTITY, 10);
         values.put(InvEntry.COLUMN_INV_PRODUCT_CATEGORY, 2);
         values.put(InvEntry.COLUMN_INV_PRODUCT_PRICE, 179.99);

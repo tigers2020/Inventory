@@ -122,6 +122,16 @@ public class InvProvider extends ContentProvider {
             }
         }
 
+        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_COMPANY_EMAIL)){
+            String pCompanyEmail = contentValues.getAsString(InvEntry.COLUMN_INV_PRODUCT_COMPANY_EMAIL);
+            Log.i(LOG_TAG, "PEmail = " + pCompanyEmail);
+            boolean validEmail = InvEntry.isValidEmail(pCompanyEmail);
+            if (!validEmail)
+            {
+                Toast.makeText(getContext(), "You must input valid Email Address.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
         if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_QUANTITY)) {
             int pQuantity = contentValues.getAsInteger(InvEntry.COLUMN_INV_PRODUCT_QUANTITY);
             if (pQuantity < 0) {

@@ -3,6 +3,8 @@ package com.example.android.inventory.data;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.text.TextUtils;
+import android.util.Patterns;
 
 /**
  * Created by tiger on 2016-12-06.
@@ -30,6 +32,7 @@ public class InvContract {
         public final static String COLUMN_INV_PRODUCT_QUANTITY = "product_quantity";
         public final static String COLUMN_INV_PRODUCT_CATEGORY = "product_category";
         public final static String COLUMN_INV_PRODUCT_COMPANY = "product_company";
+        public final static String COLUMN_INV_PRODUCT_COMPANY_EMAIL = "product_company_email";
         public final static String COLUMN_INV_PRODUCT_PRICE = "product_price";
         public final static String COLUMN_INV_PRODUCT_DESCRIPTION = "product_description";
         public final static String COLUMN_INV_PRODUCT_SIZE = "product_size";
@@ -55,6 +58,9 @@ public class InvContract {
                 return true;
             }
             return false;
+        }
+        public static boolean isValidEmail(String cEmail){
+            return !TextUtils.isEmpty(cEmail) && Patterns.EMAIL_ADDRESS.matcher(cEmail).matches();
         }
     }
 }

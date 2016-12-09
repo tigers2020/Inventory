@@ -41,7 +41,11 @@ public class InvCursorAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.inv_list_item, parent, false);
         mHolder = new ProductHolder();
+        return view;
+    }
 
+    @Override
+    public void bindView(View view, final Context context, final Cursor cursor) {
         mHolder.productNameView = (TextView) view.findViewById(R.id.list_item_product_name);
         mHolder.productCategoryView = (TextView) view.findViewById(R.id.list_item_product_category);
         mHolder.productQuantityView = (TextView) view.findViewById(R.id.list_item_product_quantity);
@@ -50,11 +54,6 @@ public class InvCursorAdapter extends CursorAdapter {
         mHolder.productFrameView = view.findViewById(R.id.list_item_frame);
         mHolder.productSaleButton = (Button) view.findViewById(R.id.list_item_product_sale_button);
 
-        return view;
-    }
-
-    @Override
-    public void bindView(View view, final Context context, final Cursor cursor) {
         int pIdCI = cursor.getColumnIndex(InvEntry._ID);
         int pNameCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_NAME);
         int pCategoryCI = cursor.getColumnIndex(InvEntry.COLUMN_INV_PRODUCT_CATEGORY);
