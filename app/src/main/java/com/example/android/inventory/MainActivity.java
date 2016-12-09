@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Uri newUri = getContentResolver().insert(InvEntry.CONTENT_URI, values);
         if (newUri == null) {
-            Toast.makeText(this, R.string.product_insert_success, Toast.LENGTH_SHORT).show();
-        } else {
             Toast.makeText(this, R.string.product_insert_failed, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, R.string.product_insert_success, Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -77,8 +77,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        } else if (TextUtils.isEmpty(pPriceString) && pPriceString.equals("") ) {
+        }
+        if (TextUtils.isEmpty(pPriceString) && pPriceString.equals("") ) {
             pPriceString = "0";
+            pPrice = Float.parseFloat(pPriceString);
+        }else{
             pPrice = Float.parseFloat(pPriceString);
         }
 
@@ -304,17 +307,17 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         setCategorySpinner();
 
-        //set TouchListener
-        mHolder.productNameView.setOnTouchListener(mTouchListener);
-        mHolder.productCategoryView.setOnTouchListener(mTouchListener);
-        mHolder.productCompanyView.setOnTouchListener(mTouchListener);
-        mHolder.productPriceView.setOnTouchListener(mTouchListener);
-        mHolder.productDescriptionView.setOnTouchListener(mTouchListener);
-        mHolder.productSizeXView.setOnTouchListener(mTouchListener);
-        mHolder.productSizeYView.setOnTouchListener(mTouchListener);
-        mHolder.productSizeZView.setOnTouchListener(mTouchListener);
-        mHolder.productWeightView.setOnTouchListener(mTouchListener);
-        mHolder.productStockDateView.setOnTouchListener(mTouchListener);
+//        //set TouchListener
+//        mHolder.productNameView.setOnTouchListener(mTouchListener);
+//        mHolder.productCategoryView.setOnTouchListener(mTouchListener);
+//        mHolder.productCompanyView.setOnTouchListener(mTouchListener);
+//        mHolder.productPriceView.setOnTouchListener(mTouchListener);
+//        mHolder.productDescriptionView.setOnTouchListener(mTouchListener);
+//        mHolder.productSizeXView.setOnTouchListener(mTouchListener);
+//        mHolder.productSizeYView.setOnTouchListener(mTouchListener);
+//        mHolder.productSizeZView.setOnTouchListener(mTouchListener);
+//        mHolder.productWeightView.setOnTouchListener(mTouchListener);
+//        mHolder.productStockDateView.setOnTouchListener(mTouchListener);
 
 
         if (mCurrentUri != null) {
