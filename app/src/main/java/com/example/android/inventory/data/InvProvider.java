@@ -122,12 +122,11 @@ public class InvProvider extends ContentProvider {
             }
         }
 
-        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_COMPANY_EMAIL)){
+        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_COMPANY_EMAIL)) {
             String pCompanyEmail = contentValues.getAsString(InvEntry.COLUMN_INV_PRODUCT_COMPANY_EMAIL);
             Log.i(LOG_TAG, "PEmail = " + pCompanyEmail);
             boolean validEmail = InvEntry.isValidEmail(pCompanyEmail);
-            if (!validEmail)
-            {
+            if (!validEmail) {
                 Toast.makeText(getContext(), "You must input valid Email Address.", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -153,7 +152,7 @@ public class InvProvider extends ContentProvider {
                 Toast.makeText(getContext(), "Price must be positive Values", Toast.LENGTH_SHORT).show();
                 return false;
             }
-            if (pPrice == 0){
+            if (pPrice == 0) {
                 Toast.makeText(getContext(), "You must put price for product.", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -161,21 +160,21 @@ public class InvProvider extends ContentProvider {
         if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_WEIGHT)) {
             float pWeight = contentValues.getAsFloat(InvEntry.COLUMN_INV_PRODUCT_WEIGHT);
 
-            if(pWeight < 0){
+            if (pWeight < 0) {
                 Toast.makeText(getContext(), "Weight must be positive Values", Toast.LENGTH_SHORT).show();
                 return false;
             }
-            if (pWeight == 0){
+            if (pWeight == 0) {
                 Toast.makeText(getContext(), "You must put Weight for product.", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
-        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_SIZE)){
+        if (contentValues.containsKey(InvEntry.COLUMN_INV_PRODUCT_SIZE)) {
             String zeroSize = Arrays.toString(new String[]{"0", "0", "0"});
             String pSize = InvEntry.COLUMN_INV_PRODUCT_SIZE;
-            if (zeroSize == pSize){
+            if (zeroSize == pSize) {
                 Toast.makeText(getContext(), "you must add size for product", Toast.LENGTH_SHORT).show();
-            return false;
+                return false;
             }
         }
 
